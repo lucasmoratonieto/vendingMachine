@@ -13,8 +13,110 @@
         <div class="productsExit"></div>
       </div>
       <div class="right side">
-        <div class="screen"></div>
-        <div class="buttons"></div>
+        <div class="screen">
+          <div class="top">
+            <div class="selectProduct">
+              <input
+                type="text"
+                name="selectedProduct"
+                class="selectedProduct"
+                value="0"
+              />
+            </div>
+          </div>
+          <div class="bottom">
+            <div class="moneyToEnter">
+              <input
+                type="text"
+                name="moneyEntered"
+                class="moneyEntered"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <div class="first-row eachRow">
+            <input
+              type="button"
+              class="key7 eachKey number"
+              value="7"
+              onclick="updateSelectedProduct('7')"
+            />
+            <input
+              type="button"
+              class="key8 eachKey number"
+              value="8"
+              onclick="updateSelectedProduct('8')"
+            />
+            <input
+              type="button"
+              class="key9 eachKey number"
+              value="9"
+              onclick="updateSelectedProduct('9')"
+            />
+          </div>
+          <div class="second-row eachRow">
+            <input
+              type="button"
+              class="key4 eachKey number"
+              value="4"
+              onclick="selectedProduct.value += '4'"
+            />
+            <input
+              type="button"
+              class="key5 eachKey number"
+              value="5"
+              onclick="selectedProduct.value += '5'"
+            />
+            <input
+              type="button"
+              class="key6 eachKey number"
+              value="6"
+              onclick="selectedProduct.value += '6'"
+            />
+          </div>
+          <div class="third-row eachRow">
+            <input
+              type="button"
+              class="key1 eachKey number"
+              value="1"
+              onclick="selectedProduct.value += '1'"
+            />
+            <input
+              type="button"
+              class="key2 eachKey number"
+              value="2"
+              onclick="selectedProduct.value +='2'"
+            />
+            <input
+              type="button"
+              class="key3 eachKey number"
+              value="3"
+              onclick="selectedProduct.value += '3'"
+            />
+          </div>
+          <div class="fourth-row eachRow">
+            <input
+              type="button"
+              class="key0 eachKey"
+              value="0"
+              onclick="selectedProduct.value += '0'"
+            />
+            <input
+              type="button"
+              class="keyBackSpace eachKey"
+              value="Back"
+              onclick="selectedProduct.value = selectedProduct.value.toString().slice(0,-1)"
+            />
+            <input
+              type="button"
+              class="keyEnter eachKey"
+              value="Enter"
+              onclick="selectedProduct.value = selectedProduct.value.toString().slice(0,-1)"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
