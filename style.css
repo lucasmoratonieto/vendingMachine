@@ -1,0 +1,40 @@
+.machine {
+  height: 90vh;
+  width: 90vh;
+  background-color: rgb(77, 77, 77);
+
+  /* Center horizontally */
+  margin-left: auto;
+  margin-right: auto;
+
+  /* Center vertically */
+  margin-top: 50px;
+}
+
+.side {
+  display: inline-grid;
+}
+
+.left,
+.right {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 5px;
+}
+
+.left {
+  height: 70%;
+  width: 60%;
+  margin-left: 5%;
+  margin-top: 5%;
+
+  background-color: aqua;
+}
+
+.right {
+  height: 30%;
+  width: 20%;
+  margin-left: 3.5%;
+
+  background-color: rgb(27, 27, 27);
+}
