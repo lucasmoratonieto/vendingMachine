@@ -3,7 +3,7 @@ import os
 productsInMachine = {
     1:{
         "product":"Chips",
-        "price":1
+        "price":200
     },
     2:{
        "product":"Chocolate",
@@ -12,53 +12,82 @@ productsInMachine = {
     3:{
        "product":"Bread",
        "price":1.5        
+    },
+     4:{
+       "product":"Water",
+       "price":5
     }
 }
 
 moneyOptionForClientEntered = {
-    1:100,
-    2:10,
-    3:1,
-    4:0
+    1:{
+        'value':100,
+        'name':'billete100'
+        },
+    2:{
+        'value':10,
+        'name':'billete10'
+        },
+    3:{
+        'value':5,
+        'name':'billete5'
+    },
+    4:{
+        'value':1,
+        'name':'monedaUno'
+    }
 }
 
+
+
+
+
+
 def productSelected(clientSelection):
+    global dineroInMachineInitial
     currentMoneyEntered=0
+    moneyUsedByClient={}
     print('You have selected: '+ productsInMachine[clientSelection]["product"] + ". \nThe price of the product is: " + str(productsInMachine[clientSelection]["price"]) + "$.")
     print('Please enter option:')
     print('1. 100 dollars')
     print('2. 10 dollars')
-    print('3. One dollar')
-    print('4. End')
+    print('3. 5 dollars')
+    print('4. One dollar')
     moneyEnteredByClient = int(input("Enter Money "))
-    print(moneyOptionForClientEntered[moneyEnteredByClient])
-    while moneyEnteredByClient != 4:
-            currentMoneyEntered += int(moneyOptionForClientEntered[moneyEnteredByClient])
-            print(f'Current money entered is: {currentMoneyEntered} ')
-            moneyEnteredByClient = int(input('Please next option:'))
+    moneyUsedByClient[moneyOptionForClientEntered[moneyEnteredByClient]['name']] = 1
+    print('----------------------------------------')
+    while currentMoneyEntered < productsInMachine[clientSelection]["price"]:
+            currentMoneyEntered += int(moneyOptionForClientEntered[moneyEnteredByClient]['value'])
+            print(f'Current money entered is: {currentMoneyEntered}$')
+            print('----------------------------------------')
             
 
-    moneyEntered(currentMoneyEntered, clientSelection)
+            if currentMoneyEntered < productsInMachine[clientSelection]["price"]:
+                print(f'Please select next option, more money needed, the price of the product is {productsInMachine[clientSelection]["price"]}$')
+                moneyEnteredByClient = int(input(f'Money remaining: {productsInMachine[clientSelection]["price"] - currentMoneyEntered }$:'))
+                print('----------------------------------------')
+                if moneyOptionForClientEntered[moneyEnteredByClient]['name'] in moneyUsedByClient:
+                    moneyUsedByClient[moneyOptionForClientEntered[moneyEnteredByClient]['name']] = moneyUsedByClient[moneyOptionForClientEntered[moneyEnteredByClient]['name']] + 1
+                else:
+                    moneyUsedByClient[moneyOptionForClientEntered[moneyEnteredByClient]['name']] = 1
+
+
+    moneyEntered(currentMoneyEntered)
+    changeMoneyInMachine(dineroInMachineInitial,moneyUsedByClient )
     
-    return
 
 # -------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
 # Function to Check the money entered
-def moneyEntered(clientMoney, clientSelection):
-    global dineroInMachineInitial
-    while clientMoney < productsInMachine[product]["price"]:
-        print("Please enter more money, the value of the " +productsInMachine[clientSelection]["product"] + ' is '+ str(productsInMachine[clientSelection]["price"]))
-        # moneyEntered(clientMoney, clientSelection)
-        clientMoney = int(input("Enter Money "))
-
+def moneyEntered(clientMoney):
     if clientMoney >= productsInMachine[product]["price"]:
        moneyBack = clientMoney - productsInMachine[product]["price"]
        print(f'Thank you for purchasing {productsInMachine[product]["product"]}')
-       print("The money back is: " + str(moneyBack)+'$')
+       if moneyBack != 0:
+           print("The money back is: " + str(moneyBack)+'$')
+       else:
+           print('Exact amount has been given. No money Back.')
 
-    #    dineroInMachineInitial += productsInMachine[product]["price"]    
-    #    changeMoneyInMachine(dineroInMachineInitial)
 # -------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
 
@@ -70,7 +99,10 @@ def openMoneyinMachineFunction():
     with open('moneyInMachineInitial.txt', 'r') as machineMoney:
         return (machineMoney.read().strip())
    
-def changeMoneyInMachine(result):
+def changeMoneyInMachine(result, moneyEnteredList):
+    print(result)
+    print(moneyEnteredList)
+    
     with open('moneyInMachineInitial.txt', 'w') as machineMoney:
         machineMoney.write(str(result))
 # -------------------------------------------------------------------------------
@@ -79,6 +111,14 @@ def changeMoneyInMachine(result):
 dineroInMachineInitial= eval(openMoneyinMachineFunction())
 
 
+print ("{:<5} {:<15} {:<15} ".format('Number','Product','Price'))
+for i in productsInMachine:
+    print("{:<5} {:<15} {:<15} ".format(i, productsInMachine[i]['product'], str(productsInMachine[i]['price'])))
+
 product = int(input("What product do you want? "))
+print('----------------------------------------')
+if product > len(productsInMachine):
+    product = int(input("Please, select a product in the list. What product do you want? "))
+    print('----------------------------------------')
 productSelected(product)
 
