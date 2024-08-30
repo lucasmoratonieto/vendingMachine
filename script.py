@@ -107,15 +107,6 @@ def changeMoneyInMachine(result, moneyEnteredList):
 
 
 
-
-
-
-
-        
-
-
-
-
     with open('moneyInMachineInitial.txt', 'w') as machineMoney:
         machineMoney.write(str(result))
 # -------------------------------------------------------------------------------
@@ -130,8 +121,10 @@ for i in productsInMachine:
 
 product = int(input("What product do you want? "))
 print('----------------------------------------')
-if product > len(productsInMachine):
+while product > len(productsInMachine):
     product = int(input("Please, select a product in the list. What product do you want? "))
     print('----------------------------------------')
+
+
 productSelected(product)
 
