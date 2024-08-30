@@ -1,1 +1,1 @@
-{'billete100': {'cuantity': 0, 'value': 100}, 'billete10': {'cuantity': 0, 'value': 10}, 'billete5': {'cuantity': 1, 'value': 5}, 'monedaUno': {'cuantity': 3, 'value': 1}}
+{'billete100': {'cuantity': 0, 'value': 100}, 'billete10': {'cuantity': 1, 'value': 10}, 'billete5': {'cuantity': 1, 'value': 5}, 'monedaUno': {'cuantity': 6, 'value': 1}}

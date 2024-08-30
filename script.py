@@ -67,14 +67,32 @@ def productSelected(clientSelection):
                     moneyUsedByClient[moneyOptionForClientEntered[moneyEnteredByClient]['name']] = 1
 
 
-    moneyEntered(currentMoneyEntered)
     changeMoneyInMachine(dineroInMachineInitial,moneyUsedByClient )
+    moneyEntered(currentMoneyEntered, moneyUsedByClient)
     
+
+
+
+# -------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
+# Function to open and write the money file
+def openMoneyinMachineFunction():
+    with open('moneyInMachineInitial.txt', 'r') as machineMoney:
+        return (machineMoney.read().strip())
+   
+def changeMoneyInMachine(result, moneyEnteredList):
+    for eachMoney in moneyEnteredList:        
+        result[eachMoney]['cuantity'] = result[eachMoney]['cuantity'] + moneyEnteredList[eachMoney]    
+    with open('moneyInMachineInitial.txt', 'w') as machineMoney:
+        machineMoney.write(str(result))
+# -------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
+
 
 # -------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
 # Function to Check the money entered
-def moneyEntered(clientMoney):
+def moneyEntered(clientMoney, moneyUsedByClient):
     if clientMoney >= productsInMachine[product]["price"]:
        moneyBack = clientMoney - productsInMachine[product]["price"]
        print(f'Thank you for purchasing {productsInMachine[product]["product"]}')
@@ -87,44 +105,14 @@ def moneyEntered(clientMoney):
 # -------------------------------------------------------------------------------
 
 
-# -------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------
-# Function to open and write the money file
-def openMoneyinMachineFunction():
-    with open('moneyInMachineInitial.txt', 'r') as machineMoney:
-        return (machineMoney.read().strip())
-   
-def changeMoneyInMachine(result, moneyEnteredList):
-    print(result)
-    print(moneyEnteredList)
-
-    for eachMoney in moneyEnteredList:
-        
-        result[eachMoney]['cuantity'] = result[eachMoney]['cuantity'] + moneyEnteredList[eachMoney]
-
-    print(result)
-    
-
-
-
-    with open('moneyInMachineInitial.txt', 'w') as machineMoney:
-        machineMoney.write(str(result))
-# -------------------------------------------------------------------------------
-# -------------------------------------------------------------------------------
-
 dineroInMachineInitial= eval(openMoneyinMachineFunction())
-
-
 print ("{:<5} {:<15} {:<15} ".format('Number','Product','Price'))
 for i in productsInMachine:
     print("{:<5} {:<15} {:<15} ".format(i, productsInMachine[i]['product'], str(productsInMachine[i]['price'])))
-
 product = int(input("What product do you want? "))
 print('----------------------------------------')
 while product > len(productsInMachine):
     product = int(input("Please, select a product in the list. What product do you want? "))
     print('----------------------------------------')
-
-
 productSelected(product)
 
