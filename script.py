@@ -38,11 +38,6 @@ moneyOptionForClientEntered = {
     }
 }
 
-
-
-
-
-
 def productSelected(clientSelection):
     global dineroInMachineInitial
     currentMoneyEntered=0
@@ -102,7 +97,25 @@ def openMoneyinMachineFunction():
 def changeMoneyInMachine(result, moneyEnteredList):
     print(result)
     print(moneyEnteredList)
+
+    for eachMoney in moneyEnteredList:
+        
+        result[eachMoney]['cuantity'] = result[eachMoney]['cuantity'] + moneyEnteredList[eachMoney]
+
+    print(result)
     
+
+
+
+
+
+
+
+        
+
+
+
+
     with open('moneyInMachineInitial.txt', 'w') as machineMoney:
         machineMoney.write(str(result))
 # -------------------------------------------------------------------------------
