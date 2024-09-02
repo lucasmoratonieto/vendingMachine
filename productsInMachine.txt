@@ -1,0 +1,1 @@
+{1: {'product': 'Chips', 'price': 200, 'cuantity': 4}, 2: {'product': 'Chocolate', 'price': 3, 'cuantity': -1}, 3: {'product': 'Bread', 'price': 1.5, 'cuantity': 4}, 4: {'product': 'Water', 'price': 5, 'cuantity': 4}}
