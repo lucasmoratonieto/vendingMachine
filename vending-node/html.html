@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.cdnfonts.com/css/new-x-digital-tfb" rel="stylesheet">
+                
+    <title>Vending Machine</title>
+</head>
+<body>
+    <!-- <h1>Vending Machine</h1> -->
+    <div id="machine">
+        <div class="in-machine left-side">
+            <div id="products">
+                <div class="product-line products-first-line">
+                    <div class="product" data-name="Coke" data-value="1.50" data-cuantity="5">1. Coke</div>
+                    <div class="product" data-name="Pepsi" data-value="2.50" data-cuantity="5">2. Pepsi</div>
+                    <div class="product" data-name="Sprite" data-value="3.50" data-cuantity="5">3. Sprite</div>
+                </div>
+                <div class="product-line products-second-line">
+                    <div class="product" data-name="Chips" data-value="0.50" data-cuantity="5">4. Chips</div>
+                    <div class="product" data-name="Candy" data-value="5.55" data-cuantity="5">5. Candy</div>
+                    <div class="product" data-name="Sandwich" data-value="7.33" data-cuantity="5">6. Sandwich</div>
+                </div>
+            </div>
+        </div>
+        <div class="in-machine rigth-side">
+            <div>
+                <div id="screen-buttons">
+                    <div id="screen-border">
+                        <div id="screen">
+                            <textarea id="screen-input" disabled wrap="hard" cols="20" rows="5" placeholder="Please, select the product" style="font-size:8px;"></textarea>
+                        </div>
+                    </div>
+                    <div id="buttons-number">
+                        <div>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="1">1</button>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="2">2</button>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="3">3</button>
+                        </div>
+                        <div>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="4">4</button>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="5">5</button>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="6">6</button>
+                        </div>
+                        <div>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="7">7</button>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="8">8</button>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="9">9</button>
+                        </div>
+                        <div>
+                            <button class="myButton myButtonNumber myButtonNumberDisabled" value="0">0</button>
+                            <button class="myButton myButtonEnterCancel myButtonNumberDisabled" value="enter">✔</button>
+                            <button class="myButton myButtonEnterCancel myButtonNumberDisabled" value="cancel">❌</button>
+                        </div>
+                    </div>
+                    <div id="buttons-money" hidden>
+                        <div>
+                            <button class="myButton myButtonMoney" value="0.5">0.5</button>
+                            <button class="myButton myButtonMoney" value="1">1</button>
+                            <button class="myButton myButtonMoney" value="2">2</button>
+                        </div>
+                        <div>
+                            <button class="myButton myButtonMoney" value="5">5</button>
+                            <button class="myButton myButtonMoney" value="10">10</button>
+                            <button class="myButton myButtonMoney" value="20">20</button>
+                        </div>                        
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+<script src="index.js"></script>
+<style>
+    @import url('https://fonts.cdnfonts.com/css/new-x-digital-tfb');
+</style>
+
+</html>

@@ -1,81 +1,128 @@
-.machine {
-  display: flex;
-  height: 90vh;
-  width: 95vh;
-  background-color: rgb(77, 77, 77);
-
-  /* Center horizontally */
-  margin-left: auto;
-  margin-right: auto;
-
-  /* Center vertically */
-  margin-top: 50px;
+body{
+    font-family: 'New X Digital tfb', sans-serif;
+    font-size: 10px;
 }
 
-.side {
-  display: inline-block;
-  padding: 12px;
+#machine{
+    display: flex;
+    background-color: rgb(51, 51, 51);
+    min-width: 300px;
+    max-width: 600px;
+    min-height: 550px;
+    margin: auto;
+    border-radius: 10px;
+}
+.in-machine{
+    /* margin: 25px;    */
+    border-radius: 10px;
+
 }
 
-.left,
-.right {
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin: 5px;
+
+
+.left-side{
+    margin: 15px;
+    background-color: rgb(175, 255, 255);
+    width: 70%;
 }
 
-.left {
-  height: 70%;
-  width: 60%;
-  margin-left: 5%;
-  margin-top: 5%;
+#products{
+    padding: 20px;
+}
+.product-line{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
 
-  background-color: aqua;
 }
 
-.right {
-  height: 70%;
-  width: 25%;
-  margin-left: 1.5%;
-  margin-top: 5%;
+.rigth-side{
+    margin: 15px 15px 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: gray;
+    width: 30%;
+}
+#screen-buttons{
+    margin-top: 100px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  background-color: rgb(27, 27, 27);
 }
 
-.screen {
-  height: 50%;
-  width: 90%;
-  margin-left: 5%;
-  margin-top: 5%;
 
-  background-color: rgb(128, 129, 129);
+
+/* #screen{
+    justify-content: center;
+    align-items: center;
+    background: whitesmoke;
+    border-radius: 10px;
+    width: 150px;
+    height: 100px;
+    margin-bottom: 10px;
+        @media (max-width: 640px) {
+        width: 110px;
+        height: 100px;
+        font-size: small;
+        justify-content: center;
+        align-items: center;
+        
+      }
+} */
+
+#screen-input{
+    display:  flex;
+    resize: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: whitesmoke;
+    border-radius: 10px;
+    width: 150px;
+    height: 120px;
+    margin-bottom: 10px;
+    
+    font-family: 'New X Digital tfb', sans-serif;
+    @media (max-width: 640px) {
+        width: 110px;
+        height: 140px;
+        font-size: small;
+        justify-content: center;
+        align-items: center;
+        
+      }
+
 }
 
-.top,
-.bottom {
-  height: 50%;
+#buttons{
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 10px;
 }
 
-.screen input {
-  width: 96%;
-  background-color: rgb(128, 129, 129);
-  border: none;
+.myButton{
+    
+    width: 30px;
+    height: 25px;
+    border-radius: 5px;
+    margin: 1px 0 1px 0;
+    /* @media (max-width: 640px) {
+        width: 30px;
+        height: 30px;
+        font-size: small;
+        justify-content: center;
+        align-items: center;
+        
+      } */
 }
-
-.buttons {
-  margin-left: 5%;
-  margin-top: 5%;
-
-  background-color: rgb(27, 27, 27);
+#money{
+    margin-top: 5px;
 }
-
-.buttons {
-  width: 95%;
-  height: auto;
-}
-.eachKey {
-  width: 25%; /* Set the desired width for the buttons */
-  height: 50px; /* Set the desired height for the buttons */
-  font-size: 18px; /* Set the font size for the button text */
-  margin: 5px; /* Add some spacing between buttons */
+#money-buttons-check{
+    display: flex;
+    justify-content: center;
 }

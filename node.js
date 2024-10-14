@@ -1,17 +1,27 @@
-import express from "express";
-import { createServer } from 'node:http'
-
-const port = process.env.PORT ?? 2000
+import express from 'express'
 
 const app = express()
+const port = 2500
 
-const server = createServer(app)
-app.use(express.static('vending-node'))
+app.use(express.static('public'))
+app.use(express.json())
 
-app.get('/', (req, res) => {
-  res.sendFile(process.cwd() + '/index.html')
+app.get('/info/:dynamic', (req, res) => {
+  const { dynamic } = req.params
+  const { key } = req.query
+  console.log(dynamic, key);
+  res.status(200).json({info: 'preset text 🐮'})
 })
 
-server.listen(port, () =>{
-  console.log(`Server listen on port ${port}`);
+app.post('/', (req, res) =>{
+  const { product } = req.body
+  console.log(product);
+  if(!product){
+    return res.status(400).send({status:'failed'})
+  }
+  res.status(200).send({status:'received', productz2 s<w1x:product})
+})
+
+app.listen(port, ()=>{
+  console.log('Listening on port 2500');
 })

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form >
+    <input type="text" id="input">
+
+    <button id="1" value="1">1</button>
+    <button id="2" value="2">2</button>
+    <button id="3" value="3">3</button>
+
+    <button id="get">GET</button>
+    <button id="post">POST</button>
+  </form>
+  <script>
+    const btn1 = document.getElementById('1')
+    const btn2 = document.getElementById('2')
+    const btn3 = document.getElementById('3')
+    const getBtn = document.getElementById('get')
+    const postBtn = document.getElementById('post')
+    const input = document.getElementById('input')
+
+    const baseUrl = 'http://localhost:2500/'
+
+    btn1.addEventListener('click', btn1Input)
+    btn2.addEventListener('click', btn2Input)
+    btn3.addEventListener('click', btn3Input)
+    getBtn.addEventListener('click', getInfo)
+    postBtn.addEventListener('click', postInfo)
+
+    async function btn1Input(e) {
+      e.preventDefault()
+      if (!input.value){
+        input.value = btn1.value
+      } else input.value = input.value + btn1.value
+      
+    }
+    async function btn2Input(e) {
+      e.preventDefault()
+      if (!input.value){
+        input.value = btn2.value
+      } else input.value = input.value + btn2.value
+      
+    }
+
+    async function btn3Input(e) {
+      e.preventDefault()
+      if (!input.value){
+        input.value = btn3.value
+      } else input.value = input.value + btn3.value
+      
+    }
+
+    async function getInfo(e) {
+      e.preventDefault()
+      const res = await fetch(baseUrl + 'info/lucas?key=hello',
+        {
+          method: 'GET'
+        })
+        const data = await res.json()
+        input.value = data.info
+    }
+
+    async function postInfo(e) {
+      e.preventDefault()
+      if (input.value ==''){ return }
+
+      const res = await fetch(baseUrl,
+        {
+          method: 'POST',
+          headers:{
+            "Content-Type": 'application/json'
+          },
+          body: JSON.stringify({
+            product:input.value
+          })
+        })
+        const data = await res.json()
+        input.value = ""
+    }
+
+  </script>
+</body>
+</html>
