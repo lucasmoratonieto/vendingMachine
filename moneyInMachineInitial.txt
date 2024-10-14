@@ -1,1 +1,1 @@
-{1: {'cuantity': 0, 'value': 100}, 2: {'cuantity': 0, 'value': 20}, 3: {'cuantity': 0, 'value': 10}, 4: {'cuantity': 0, 'value': 5}, 5: {'cuantity': 0, 'value': 1}, 6: {'cuantity': 0, 'value': 0.5}}
+{1: {'cuantity': 0, 'value': 100}, 2: {'cuantity': 0, 'value': 20}, 3: {'cuantity': 0, 'value': 10}, 4: {'cuantity': 0, 'value': 5}, 5: {'cuantity': 0, 'value': 1}, 6: {'cuantity': 0, 'value': 0.5},e}

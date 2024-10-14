@@ -1,0 +1,81 @@
+.machine {
+  display: flex;
+  height: 90vh;
+  width: 95vh;
+  background-color: rgb(77, 77, 77);
+
+  /* Center horizontally */
+  margin-left: auto;
+  margin-right: auto;
+
+  /* Center vertically */
+  margin-top: 50px;
+}
+
+.side {
+  display: inline-block;
+  padding: 12px;
+}
+
+.left,
+.right {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 5px;
+}
+
+.left {
+  height: 70%;
+  width: 60%;
+  margin-left: 5%;
+  margin-top: 5%;
+
+  background-color: aqua;
+}
+
+.right {
+  height: 70%;
+  width: 25%;
+  margin-left: 1.5%;
+  margin-top: 5%;
+
+  background-color: rgb(27, 27, 27);
+}
+
+.screen {
+  height: 50%;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
+
+  background-color: rgb(128, 129, 129);
+}
+
+.top,
+.bottom {
+  height: 50%;
+}
+
+.screen input {
+  width: 96%;
+  background-color: rgb(128, 129, 129);
+  border: none;
+}
+
+.buttons {
+  margin-left: 5%;
+  margin-top: 5%;
+
+  background-color: rgb(27, 27, 27);
+}
+
+.buttons {
+  width: 95%;
+  height: auto;
+}
+.eachKey {
+  width: 25%; /* Set the desired width for the buttons */
+  height: 50px; /* Set the desired height for the buttons */
+  font-size: 18px; /* Set the font size for the button text */
+  margin: 5px; /* Add some spacing between buttons */
+}
