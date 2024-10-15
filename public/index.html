@@ -62,7 +62,8 @@
           method: 'GET'
         })
         const data = await res.json()
-        input.value = data.info
+        console.log(data);
+        input.value = data.firstPosition.product
     }
 
     async function postInfo(e) {

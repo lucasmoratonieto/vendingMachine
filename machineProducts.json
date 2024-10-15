@@ -1,0 +1,22 @@
+{
+  "firstPosition":{
+    "product": "coke",
+    "price": "2.5",
+    "cuantity": "10"
+  },
+  "secondPosition":{
+    "product": "fanta",
+    "price": "2.0",
+    "cuantity": "10"
+  },
+  "thirdPosition":{
+    "product": "pepsi",
+    "price": "3.5",
+    "cuantity": "10"
+  },
+  "forthPosition":{
+    "product": "sandwich",
+    "price": "5.5",
+    "cuantity": "10"
+  }
+}
