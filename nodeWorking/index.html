@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form >
+    <input type="text" id="input">
+
+    <button id="1" value="1">1</button>
+    <button id="2" value="2">2</button>
+    <button id="3" value="3">3</button>
+
+    <button id="get">GET</button>
+    <button id="post">POST</button>
+  </form>
+  <script>
+    let pressedGet = ''
+    const btn1 = document.getElementById('1')
+    const btn2 = document.getElementById('2')
+    const btn3 = document.getElementById('3')
+    const getBtn = document.getElementById('get')
+    const postBtn = document.getElementById('post')
+    const input = document.getElementById('input')
+
+    const baseUrl = 'http://localhost:2500/'
+
+    btn1.addEventListener('click', btn1Input)
+    btn2.addEventListener('click', btn2Input)
+    btn3.addEventListener('click', btn3Input)
+    getBtn.addEventListener('click', getInfo)
+    postBtn.addEventListener('click', postInfo)
+
+    const emptyInputError = "Please enter a number";
+
+
+    async function btn1Input(e) {
+      e.preventDefault()
+      if (!input.value || input.value == emptyInputError){
+        input.value = btn1.value
+        buttonPressed = btn1.value
+      } else {
+        input.value = input.value + btn1.value
+        buttonPressed = btn1.value
+      }
+      
+    }
+    async function btn2Input(e) {
+      e.preventDefault()
+      if (!input.value || input.value == emptyInputError){
+        input.value = btn2.value
+        buttonPressed= btn2.value
+      } else {
+        input.value = input.value + btn2.value
+        buttonPressed= btn2.value
+      }
+      
+    }
+
+    async function btn3Input(e) {
+      e.preventDefault()
+      if (!input.value || input.value == emptyInputError){
+        input.value = btn3.value
+        buttonPressed = btn3.value
+      } else {
+        input.value = input.value + btn3.value
+        buttonPressed = btn3.value
+      }
+      
+    }
+
+    async function getInfo(e) {
+      e.preventDefault()
+      
+      if (!input.value || input.value == emptyInputError ) {
+        input.value = emptyInputError ;
+        return
+      }
+
+      const res = await fetch(baseUrl + 'products', 
+        {
+          method: 'GET'
+        })
+    
+        data = await res.json()
+        // console.log(data);
+        if (data[buttonPressed].cuantity == 0){
+          input.value = "No more of this product"
+          setTimeout(()=>{
+          input.value= ''
+        },1000)
+        buttonPressed = ''
+        }else{
+          input.value = `${data[buttonPressed].product} -> ${data[buttonPressed].price}$`
+        console.log(data)
+        console.log(JSON.stringify(data))
+        pressedGet = 1
+        }
+        
+    }
+
+    async function postInfo(e) {
+      e.preventDefault()
+      
+      if (pressedGet == ''){
+        input.value = "Please Select a product"
+        setTimeout(()=>{
+          input.value= ''
+        },1000)
+         return 
+        } else{
+
+          const res = await fetch(baseUrl,
+            {
+              method: 'POST',
+              headers:{
+                "Content-Type": 'application/json'
+              },
+              
+    
+                body: JSON.stringify({
+                  product:data[buttonPressed]
+                })
+              
+            })
+            // const data = await res.json()
+            input.value = "Thank you!"
+            setTimeout(()=>{
+              input.value= ''
+            },1000)
+            buttonPressed = ''
+            pressedGet
+            
+        }
+
+        
+    }
+
+  </script>
+</body>
+</html>
