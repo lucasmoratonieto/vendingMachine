@@ -81,11 +81,7 @@ function screenDataSelectedProduct(productSelectedNumber){
     console.log(data[productSelectedNumber])
     let productSelected = data[productSelectedNumber].product;
     let productCost = data[productSelectedNumber].price;
-    let productCuantity = data[productSelectedNumber].cuantity;
-    console.log(productSelected)
-    console.log(productCost)
-    console.log(productCuantity)
-    
+
     document.getElementById('screen-input').value =`You have selected;\n Product: ${productSelected}\nCost: ${productCost}$
     
     Please Enter Money`
@@ -93,51 +89,78 @@ function screenDataSelectedProduct(productSelectedNumber){
       buttonsMoney[i].addEventListener('click', function() {
         let buttonValue = Number(this.value);
         customerProductMoneyEntered = Number(customerProductMoneyEntered) + buttonValue;
-        screenDataAfterSelect(customerProductMoneyEntered, productSelected, productCost)
+        screenDataAfterSelect(customerProductMoneyEntered,productSelectedNumber, productSelected, productCost)
+
+
+// -----------------------------------------------------------------TO Reviwed ------------------------------------------------------------------------------------------
+
+
+        // AQUI SE ARREGLA QUE DEVUELVA BIEN EL DINEO, PERO LUEGO CUANDO LE METES POCO A POCO ES CUANDO FALLA.
+        customerProductMoneyEntered = 0
       });
     }
   }
 }
 
-// -----------------------------------------------------------------Reviwed-------------------------------------------------------------------------------------------
 
 
 
 
-function screenDataAfterSelect(customerProductMoneyEntered, productSelected, productCost){
-  const returnMoney = (productCost - customerProductMoneyEntered).toFixed(2)
-  document.getElementById('screen-input').value =document.getElementById('screen-input').value =`You have selected;\n Product: ${productSelected}\nCost: ${productCost}$
 
-  Money Entered: ${customerProductMoneyEntered}
+function screenDataAfterSelect(moneyEntered, productSelectedNumber, selectedProduct, priceProduct){
+  
+  const returnMoney = (priceProduct - moneyEntered).toFixed(2)
+  document.getElementById('screen-input').value =document.getElementById('screen-input').value =`You have selected;\n Product: ${selectedProduct}\nCost: ${priceProduct}$
+  
+  Money Entered: ${moneyEntered}
   
   Left ${returnMoney}$`
-
-  if (customerProductMoneyEntered >= productCost){
-    change(customerProductMoneyEntered, productCost)
+  
+  if (moneyEntered >= priceProduct){
+    change(moneyEntered,productSelectedNumber, priceProduct)
   }
 
 }
 
-function change(customerProductMoneyEntered, productCost){
-  let change = (customerProductMoneyEntered - productCost).toFixed(2);
-  document.getElementById('screen-input').value =document.getElementById('screen-input').value =`Thank you for the purchase.\n 
-  
-  The money back is ${change}$`
-  document.getElementById('buttons-number').hidden = false
-  document.getElementById('buttons-money').hidden = true
-  
-  const eachButtonNumber  = document.getElementsByClassName('myButtonNumberDisabled');
-  console.log(eachButtonNumber)
-  
-  for (i = 0; i < eachButtonNumber.length; i++){
-      eachButtonNumber[i].disabled = true;
 
-  }
-  setTimeout(()=>{
-    document.getElementById('screen-input').value ="";
+function change(moneyEnteredChange, productSelectedNumber, priceProductChange){  
+  console.log('productSelectedNumber: ' + productSelectedNumber)
+  postProducts()
+  async function postProducts(e) {
+    const res = await fetch(baseUrl,
+      {
+        method: 'POST',
+        headers: {
+          "Content-Type": 'application/json'
+        },
+        body:JSON.stringify({
+          product:data[productSelectedNumber]
+        })
+      }
+    )
+    let change = (moneyEnteredChange - priceProductChange).toFixed(2);
+    document.getElementById('screen-input').value =document.getElementById('screen-input').value =`Thank you for the purchase.\n 
+    
+    The money back is ${change}$`
+    document.getElementById('buttons-number').hidden = false
+    document.getElementById('buttons-money').hidden = true
+    
+    const eachButtonNumber  = document.getElementsByClassName('myButtonNumberDisabled');
+    
+    
     for (i = 0; i < eachButtonNumber.length; i++){
-      eachButtonNumber[i].disabled = false;
+        eachButtonNumber[i].disabled = true;
+  
+    }
+    setTimeout(()=>{
+      document.getElementById('screen-input').value ="";
+      for (i = 0; i < eachButtonNumber.length; i++){
+        eachButtonNumber[i].disabled = false;
+    }
+    },"5000")
+    change = 0
   }
-  },"5000")
+
+
 
 }

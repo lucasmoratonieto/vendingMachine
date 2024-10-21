@@ -28,6 +28,7 @@ app.post('/', (req, res) =>{
   // console.log(buttonPressed)
   // console.log(product)
   if(!product){
+
     return res.status(400).send({status:'failed'})
   }
   res.status(200).send({status:'received', product})
