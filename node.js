@@ -63,11 +63,8 @@ app.post('/', (req, res) =>{
          }
       }
     })
-  
-  // FUNCIONA PERO ELIMINA TODO Y DEJA SOLO LO QUE LE PASO.
-
 })
 
 app.listen(port, ()=>{
-  console.log('Listening on port 2500');
+  console.log(`Listening on port: https://localhost:${port}`)
 })

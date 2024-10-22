@@ -90,13 +90,10 @@ function screenDataSelectedProduct(productSelectedNumber){
         let buttonValue = Number(this.value);
         customerProductMoneyEntered = Number(customerProductMoneyEntered) + buttonValue;
         screenDataAfterSelect(customerProductMoneyEntered,productSelectedNumber, productSelected, productCost)
-
-
 // -----------------------------------------------------------------TO Reviwed ------------------------------------------------------------------------------------------
-
-
-        // AQUI SE ARREGLA QUE DEVUELVA BIEN EL DINEO, PERO LUEGO CUANDO LE METES POCO A POCO ES CUANDO FALLA.
-        customerProductMoneyEntered = 0
+        if (customerProductMoneyEntered >= productCost){
+          customerProductMoneyEntered = 0
+        }        
       });
     }
   }
