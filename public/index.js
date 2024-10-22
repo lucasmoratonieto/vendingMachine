@@ -1,3 +1,30 @@
+//Put the JSON into the machine as products.
+htmlJSONCall()
+const lisEl = document.querySelectorAll('ul')
+function htmlJSONCall() {
+  const lista = document.getElementById('lista-productos')
+  lista.innerHTML = ''
+  
+  fetch('../machineProducts.json')
+    .then(res => res.json())
+    .then(data =>{
+      // console.log(data[1].product)
+      for (let i = 1; i <= Object.keys(data).length; i++){
+        const eachProductLIP = document.createElement('li');
+        const eachProductLIPL = document.createElement('div');
+        eachProductLIP.textContent = `${data[i].product} `
+        eachProductLIPL.textContent = `${data[i].price}$ left: ${data[i].cuantity}`
+        lisEl[0].appendChild(eachProductLIP)
+        eachProductLIP.classList.add('product')
+        eachProductLIP.appendChild(eachProductLIPL)
+        eachProductLIPL.classList.add('product-specifications')
+      }
+    })
+    .catch(err => console.log(err))
+}
+
+
+
 // Const of the buttons
 const buttonsNumber = document.getElementsByClassName('myButtonNumber')
 const buttonsMoney = document.getElementsByClassName('myButtonMoney')
@@ -154,10 +181,10 @@ function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
       for (i = 0; i < eachButtonNumber.length; i++){
         eachButtonNumber[i].disabled = false;
     }
-    },"5000")
-    change = 0
-  }
-
-
+  },"5000")
+  change = 0
+}
+// Ithink that this part is not working, it call two times and repeates the info.
+  htmlJSONCall()
 
 }

@@ -2,16 +2,24 @@ import express from 'express'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'node:fs'
+import { createClient } from "@libsql/client";
+import { create } from 'domain';
+
 
 
 
 const app = express()
-const port = 2500
+const port = process.env.PORT ?? 2500
+
+// db = createClient({
+//   url: "",
+//   authToken: process.env.DB_TOKEN
+// })
 
 const products = fileURLToPath(import.meta.url)
 const dirname =  path.dirname(products)
 
-const productsjson = path.join(dirname, 'machineProducts.json') 
+const productsjson = path.join(dirname, './public/machineProducts.json') 
 
 
 app.use(express.static('public'))
@@ -45,6 +53,9 @@ app.post('/', (req, res) =>{
          for (let i = 1; i <= Object.keys(jsonData).length; i++){
           if (jsonData[i].product == product.product){
             console.log("son iguales")
+            console.log(jsonData[i])
+            console.log(product)
+
             jsonData[i].cuantity = jsonData[i].cuantity - 1
             console.log(jsonData)
             fs.writeFile(productsjson, JSON.stringify(jsonData), err =>{
