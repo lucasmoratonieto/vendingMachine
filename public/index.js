@@ -1,11 +1,15 @@
 //Put the JSON into the machine as products.
-htmlJSONCall()
-const lisEl = document.querySelectorAll('ul')
 function htmlJSONCall() {
-  const lista = document.getElementById('lista-productos')
-  lista.innerHTML = ''
-  
-  fetch('../machineProducts.json')
+  const luList = document.querySelectorAll('ul')
+  const producto = document.getElementsByClassName('product')
+  if (producto[0] != undefined ) {
+    for (let i = 0; i < producto.length; i++){
+      console.log('each product', producto[i])
+      producto[i].remove()
+      
+    }
+  }
+    fetch('../machineProducts.json')
     .then(res => res.json())
     .then(data =>{
       // console.log(data[1].product)
@@ -14,18 +18,19 @@ function htmlJSONCall() {
         const eachProductLIPL = document.createElement('div');
         eachProductLIP.textContent = `${data[i].product} `
         eachProductLIPL.textContent = `${data[i].price}$ left: ${data[i].cuantity}`
-        lisEl[0].appendChild(eachProductLIP)
+        luList[0].appendChild(eachProductLIP)
         eachProductLIP.classList.add('product')
         eachProductLIP.appendChild(eachProductLIPL)
         eachProductLIPL.classList.add('product-specifications')
       }
     })
     .catch(err => console.log(err))
-}
-
-
-
-// Const of the buttons
+    
+    
+  }
+  htmlJSONCall()
+  
+  // Const of the buttons
 const buttonsNumber = document.getElementsByClassName('myButtonNumber')
 const buttonsMoney = document.getElementsByClassName('myButtonMoney')
 const enterButton = document.getElementsByClassName('myButtonEnterCancel')[0]
@@ -54,7 +59,7 @@ for (i = 0; i < buttonsNumber.length; i++){
   });
 }
 
-// Function to cancel what you have order 
+// Function to cancel what you have order
 cancelButton.addEventListener('click', function() {
     customerProductNumber = '';
     document.getElementById('screen-input').value =''
@@ -63,7 +68,7 @@ cancelButton.addEventListener('click', function() {
 
 // The value of the screen before clicking the okey button. It is called everytime a number is press.
 function screenDataBeforeSelect(productSelectedNumberBeforeEnter){
-  document.getElementById('screen-input').value =`Number entered: ${productSelectedNumberBeforeEnter}\n 
+  document.getElementById('screen-input').value =`Number entered: ${productSelectedNumberBeforeEnter}\n
   Please click ✔ to select the product or ❌ to cancel`
 }
 
@@ -80,7 +85,7 @@ enterButton.addEventListener('click', function(){
       document.getElementById('screen-input').value = ""
       for (i = 0; i < allButtons.length; i++){
         allButtons[i].disabled = false
-      } 
+      }
     },1000)
   }else {
     productSelectedNumber = Number(customerProductNumber);
@@ -103,14 +108,14 @@ function screenDataSelectedProduct(productSelectedNumber){
         method:'GET'
       }
     )
-    
+
     data = await res.json()
     console.log(data[productSelectedNumber])
     let productSelected = data[productSelectedNumber].product;
     let productCost = data[productSelectedNumber].price;
 
     document.getElementById('screen-input').value =`You have selected;\n Product: ${productSelected}\nCost: ${productCost}$
-    
+
     Please Enter Money`
     for (i = 0; i < buttonsMoney.length; i++){
       buttonsMoney[i].addEventListener('click', function() {
@@ -120,26 +125,21 @@ function screenDataSelectedProduct(productSelectedNumber){
 // -----------------------------------------------------------------TO Reviwed ------------------------------------------------------------------------------------------
         if (customerProductMoneyEntered >= productCost){
           customerProductMoneyEntered = 0
-        }        
+        }
       });
     }
   }
 }
 
-
-
-
-
-
 function screenDataAfterSelect(moneyEntered, productSelectedNumber, selectedProduct, priceProduct){
-  
+
   const returnMoney = (priceProduct - moneyEntered).toFixed(2)
   document.getElementById('screen-input').value =document.getElementById('screen-input').value =`You have selected;\n Product: ${selectedProduct}\nCost: ${priceProduct}$
-  
+
   Money Entered: ${moneyEntered}
-  
+
   Left ${returnMoney}$`
-  
+
   if (moneyEntered >= priceProduct){
     change(moneyEntered,productSelectedNumber, priceProduct)
   }
@@ -147,7 +147,7 @@ function screenDataAfterSelect(moneyEntered, productSelectedNumber, selectedProd
 }
 
 
-function change(moneyEnteredChange, productSelectedNumber, priceProductChange){  
+function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
   console.log('productSelectedNumber: ' + productSelectedNumber)
   postProducts()
   async function postProducts(e) {
@@ -163,18 +163,18 @@ function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
       }
     )
     let change = (moneyEnteredChange - priceProductChange).toFixed(2);
-    document.getElementById('screen-input').value =document.getElementById('screen-input').value =`Thank you for the purchase.\n 
-    
+    document.getElementById('screen-input').value =document.getElementById('screen-input').value =`Thank you for the purchase.\n
+
     The money back is ${change}$`
     document.getElementById('buttons-number').hidden = false
     document.getElementById('buttons-money').hidden = true
-    
+
     const eachButtonNumber  = document.getElementsByClassName('myButtonNumberDisabled');
-    
-    
+
+
     for (i = 0; i < eachButtonNumber.length; i++){
         eachButtonNumber[i].disabled = true;
-  
+
     }
     setTimeout(()=>{
       document.getElementById('screen-input').value ="";
@@ -183,8 +183,8 @@ function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
     }
   },"5000")
   change = 0
-}
-// Ithink that this part is not working, it call two times and repeates the info.
-  htmlJSONCall()
+  // Ithink that this part is not working, it call two times and repeates the info.
+    htmlJSONCall()
+  }
 
 }
