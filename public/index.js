@@ -1,34 +1,45 @@
 //Put the JSON into the machine as products.
 function htmlJSONCall() {
-  const luList = document.querySelectorAll('ul')
-  const producto = document.getElementsByClassName('product')
-  if (producto[0] != undefined ) {
-    for (let i = 0; i < producto.length; i++){
-      console.log('each product', producto[i])
-      producto[i].remove()
-      
+  console.log('fetch')
+    const luList = document.querySelectorAll('ul')
+    const producto = document.getElementsByClassName('product')
+    if(producto[0]){
+      console.log(producto)
+      const productArray = Array.from(producto)
+      console.log(productArray)
+      productArray.forEach(function(eachproducto) {
+        // console.log(eachproducto)
+        eachproducto.remove()
+      });
     }
-  }
+    // if (producto[0] != undefined ) {
+    //   for (let i = 0; i < producto.length; i++){
+    //     console.log('each product', producto[i])
+    //     producto[0].remove()
+        
+    //   }
+    // }
     fetch('../machineProducts.json')
-    .then(res => res.json())
-    .then(data =>{
-      // console.log(data[1].product)
-      for (let i = 1; i <= Object.keys(data).length; i++){
-        const eachProductLIP = document.createElement('li');
-        const eachProductLIPL = document.createElement('div');
-        eachProductLIP.textContent = `${data[i].product} `
-        eachProductLIPL.textContent = `${data[i].price}$ left: ${data[i].cuantity}`
-        luList[0].appendChild(eachProductLIP)
-        eachProductLIP.classList.add('product')
-        eachProductLIP.appendChild(eachProductLIPL)
-        eachProductLIPL.classList.add('product-specifications')
-      }
-    })
-    .catch(err => console.log(err))
-    
-    
+      .then(res => res.json())
+      .then(data =>{
+        // console.log(data[1].product)
+        for (let i = 1; i <= Object.keys(data).length; i++){
+          const eachProductLIP = document.createElement('li');
+          const eachProductLIPL = document.createElement('div');
+          eachProductLIP.textContent = `${data[i].product} `
+          eachProductLIPL.textContent = `${data[i].price}$ left: ${data[i].cuantity}`
+          luList[0].appendChild(eachProductLIP)
+          eachProductLIP.classList.add('product')
+          eachProductLIP.appendChild(eachProductLIPL)
+          eachProductLIPL.classList.add('product-specifications')
+        }
+      })
+      .catch(err => console.log(err))    
   }
-  htmlJSONCall()
+
+htmlJSONCall()
+
+
   
   // Const of the buttons
 const buttonsNumber = document.getElementsByClassName('myButtonNumber')
@@ -164,27 +175,32 @@ function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
     )
     let change = (moneyEnteredChange - priceProductChange).toFixed(2);
     document.getElementById('screen-input').value =document.getElementById('screen-input').value =`Thank you for the purchase.\n
-
+    
     The money back is ${change}$`
     document.getElementById('buttons-number').hidden = false
     document.getElementById('buttons-money').hidden = true
+    
+    change = 0
+    disableChangeButtons()
+    console.log('Post')
+  }
+  setTimeout(() =>{
+    htmlJSONCall()
+  },500)
+  
+}
 
-    const eachButtonNumber  = document.getElementsByClassName('myButtonNumberDisabled');
 
 
-    for (i = 0; i < eachButtonNumber.length; i++){
-        eachButtonNumber[i].disabled = true;
-
-    }
+function disableChangeButtons(){
+  const eachButtonNumber  = document.getElementsByClassName('myButtonNumberDisabled');
+  for (i = 0; i < eachButtonNumber.length; i++){
+    eachButtonNumber[i].disabled = true;
     setTimeout(()=>{
       document.getElementById('screen-input').value ="";
       for (i = 0; i < eachButtonNumber.length; i++){
         eachButtonNumber[i].disabled = false;
-    }
-  },"5000")
-  change = 0
-  // Ithink that this part is not working, it call two times and repeates the info.
-    htmlJSONCall()
+      }
+    },"5000")
   }
-
 }
