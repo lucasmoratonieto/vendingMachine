@@ -55,6 +55,12 @@ let productSelectedNumber = '';
 let customerProductMoneyEntered ='';
 
 
+
+
+
+
+
+
 // La url que habría que cambiar cuando se genera la base de datos
 const baseUrl = 'http://localhost:2500/'
 
@@ -111,8 +117,9 @@ enterButton.addEventListener('click', function(){
 })
 
 
-//CREO QUE EL PROBLEMA ESTÁ EN ESTA FUNCIÓN.
+
 // Function to change what is in the screen. Also it takes the value of the html to check the price and the name of the product. Now it is using node to fetch all the info.
+let avoidEnteringInCreateClickFunction = 1
 function screenDataSelectedProduct(productSelectedNumber){
   console.log('Starting screenDataSelectedProduct') 
   getProducts()
@@ -126,27 +133,42 @@ function screenDataSelectedProduct(productSelectedNumber){
 
     data = await res.json()
     console.log(data[productSelectedNumber])
-    let productSelected = data[productSelectedNumber].product;
-    let productCost = data[productSelectedNumber].price;
+     productSelected = data[productSelectedNumber].product;
+     productCost = data[productSelectedNumber].price;
   console.log('Starting screenDataSelectedProduct beforeGetPart') 
 
     document.getElementById('screen-input').value =`You have selected;\n Product: ${productSelected}\nCost: ${productCost}$
 
     Please Enter Money`
-    for (i = 0; i < buttonsMoney.length; i++){
-      buttonsMoney[i].addEventListener('click', function() {
-        let buttonValue = Number(this.value);
-        customerProductMoneyEntered = Number(customerProductMoneyEntered) + buttonValue;
-        console.log('Calling screenDataAfterSelect') 
-        screenDataAfterSelect(customerProductMoneyEntered,productSelectedNumber, productSelected, productCost)
 
-        if (customerProductMoneyEntered >= productCost){
-          customerProductMoneyEntered = 0
-          console.log('Calling change')
-          change(customerProductMoneyEntered,productSelectedNumber, productCost)
-        }
-      });
+    if (avoidEnteringInCreateClickFunction === 1){
+
+      for (i = 0; i < buttonsMoney.length; i++){
+        buttonsMoney[i].addEventListener('click', functionButtonsMoney);
+        console.log('button click function assigned to each of them', buttonsMoney[i])
+      }
     }
+    
+    avoidEnteringInCreateClickFunction = avoidEnteringInCreateClickFunction + 1
+    
+    function functionButtonsMoney() {
+      let buttonValue = Number(this.value);
+      customerProductMoneyEntered = Number(customerProductMoneyEntered) + buttonValue;
+      console.log('Calling screenDataAfterSelect')
+      screenDataAfterSelect(customerProductMoneyEntered,productSelectedNumber, productSelected, productCost)
+      console.log('Before Calling screenDataAfterSelect')
+      // change(customerProductMoneyEntered, productSelectedNumber, productCost)
+
+      if (customerProductMoneyEntered >= productCost){
+        console.log('customerProductMoneyEntered >= productCost', customerProductMoneyEntered, productCost)
+        console.log('Calling change')
+        change(customerProductMoneyEntered, productSelectedNumber, productCost)
+        customerProductMoneyEntered = 0
+      } else{
+        console.log('customerProductMoneyEntered not > productCost', customerProductMoneyEntered, productCost)
+      }
+    };
+    
 
   }
 }
@@ -163,19 +185,13 @@ function screenDataAfterSelect(moneyEntered, productSelectedNumber, selectedProd
   Money Entered: ${moneyEntered}
 
   Left ${returnMoney}$`
-
-    // Esta parte está comentada por que cuando eliges el segundo producto se ejecuta dos veces, voy a subirla a la función de arriba.
-  // if (moneyEntered >= priceProduct){
-  //   console.log('Calling change')
-  //   change(moneyEntered,productSelectedNumber, priceProduct)
-  //   return
-  // }
-
+  return
 }
 
 
 function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
   console.log('productSelectedNumber: ' + productSelectedNumber)
+  console.log('Change', moneyEnteredChange, 'price', priceProductChange)
   console.log('Calling post')
   postProducts(productSelectedNumber)
   let change = (moneyEnteredChange - priceProductChange).toFixed(2);
@@ -186,7 +202,9 @@ function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
   document.getElementById('buttons-money').hidden = true
   change = 0
   console.log('Calling fetch')
-  htmlJSONCall()
+  setTimeout(() =>{
+    htmlJSONCall()
+  },500)
   disableChangeButtons()
   
 }
