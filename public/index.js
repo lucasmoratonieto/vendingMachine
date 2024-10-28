@@ -1,20 +1,19 @@
 //Put the JSON into the machine as products.
 function htmlJSONCall() {
-  console.log('fetch')
     const luList = document.querySelectorAll('ul')
     const producto = document.getElementsByClassName('product')
     if(producto[0]){
-      console.log(producto)
+  
       const productArray = Array.from(producto)
-      console.log(productArray)
+  
       productArray.forEach(function(eachproducto) {
-        // console.log(eachproducto)
+    
         eachproducto.remove()
       });
     }
     if (producto[0] != undefined ) {
       for (let i = 0; i < producto.length; i++){
-        console.log('each product', producto[i])
+    
         producto[0].remove()
         
       }
@@ -22,11 +21,11 @@ function htmlJSONCall() {
     fetch('../machineProducts.json')
       .then(res => res.json())
       .then(data =>{
-        // console.log(data[1].product)
+    
         for (let i = 1; i <= Object.keys(data).length; i++){
           const eachProductLIP = document.createElement('li');
           const eachProductLIPL = document.createElement('div');
-          eachProductLIP.textContent = `${data[i].product} `
+          eachProductLIP.textContent = `${i}. ${data[i].product} `
           eachProductLIPL.textContent = `${data[i].price}$ left: ${data[i].cuantity}`
           luList[0].appendChild(eachProductLIP)
           eachProductLIP.classList.add('product')
@@ -34,7 +33,7 @@ function htmlJSONCall() {
           eachProductLIPL.classList.add('product-specifications')
         }
       })
-      .catch(err => console.log(err))    
+  
   }
 
 htmlJSONCall()
@@ -54,25 +53,16 @@ let customerProductNumber = '';
 let productSelectedNumber = '';
 let customerProductMoneyEntered ='';
 
-
-
-
-
-
-
-
 // La url que habría que cambiar cuando se genera la base de datos
 const baseUrl = 'http://localhost:2500/'
-
-
 
 // Function so each button appear in the screen. Also call for the function to change the screen.
 for (i = 0; i < buttonsNumber.length; i++){
   buttonsNumber[i].addEventListener('click', function() {
     let buttonValue = this.value;
     customerProductNumber = customerProductNumber + buttonValue;
-    // console.log('Customer Product Number:', customerProductNumber);
-    console.log('Calling screenDataBeforeSelect') 
+
+
     screenDataBeforeSelect(customerProductNumber)
   });
 }
@@ -108,10 +98,10 @@ enterButton.addEventListener('click', function(){
   }else {
     productSelectedNumber = Number(customerProductNumber);
     customerProductNumber = "";
-    console.log('Product Selected Number:', productSelectedNumber);
+
     document.getElementById('buttons-number').hidden = true
     document.getElementById('buttons-money').hidden = false
-    console.log('Calling screenDataSelectedProduct') 
+
     screenDataSelectedProduct(productSelectedNumber)
   }
 })
@@ -121,10 +111,11 @@ enterButton.addEventListener('click', function(){
 // Function to change what is in the screen. Also it takes the value of the html to check the price and the name of the product. Now it is using node to fetch all the info.
 let avoidEnteringInCreateClickFunction = 1
 function screenDataSelectedProduct(productSelectedNumber){
-  console.log('Starting screenDataSelectedProduct') 
   getProducts()
+
   async function getProducts(e) {
-  console.log('Starting screenDataSelectedProduct GetPart') 
+      console.log(productSelectedNumber)
+
     const res = await fetch(baseUrl + 'products',
       {
         method:'GET'
@@ -132,42 +123,59 @@ function screenDataSelectedProduct(productSelectedNumber){
     )
 
     data = await res.json()
-    console.log(data[productSelectedNumber])
+
      productSelected = data[productSelectedNumber].product;
      productCost = data[productSelectedNumber].price;
-  console.log('Starting screenDataSelectedProduct beforeGetPart') 
 
-    document.getElementById('screen-input').value =`You have selected;\n Product: ${productSelected}\nCost: ${productCost}$
+      if(data[productSelectedNumber].cuantity < 1){
+        document.getElementById('screen-input').value = `We have run out of ${productSelected}. Please, select an other one.`
+        for (i = 0; i < allButtons.length; i++){
+          allButtons[i].disabled = true
+        }
+        setTimeout(()=>{
+          document.getElementById('screen-input').value = ""
+          for (i = 0; i < allButtons.length; i++){
+            allButtons[i].disabled = false
+            document.getElementById('buttons-number').hidden = false
+            document.getElementById('buttons-money').hidden = true
+          }
+        },3000)
+      }else {
 
-    Please Enter Money`
-
-    if (avoidEnteringInCreateClickFunction === 1){
-
-      for (i = 0; i < buttonsMoney.length; i++){
-        buttonsMoney[i].addEventListener('click', functionButtonsMoney);
-        console.log('button click function assigned to each of them', buttonsMoney[i])
-      }
-    }
+        document.getElementById('screen-input').value =`You have selected;\n Product: ${productSelected}\nCost: ${productCost}$
     
-    avoidEnteringInCreateClickFunction = avoidEnteringInCreateClickFunction + 1
+        Please Enter Money`
     
-    function functionButtonsMoney() {
-      let buttonValue = Number(this.value);
-      customerProductMoneyEntered = Number(customerProductMoneyEntered) + buttonValue;
-      console.log('Calling screenDataAfterSelect')
-      screenDataAfterSelect(customerProductMoneyEntered,productSelectedNumber, productSelected, productCost)
-      console.log('Before Calling screenDataAfterSelect')
-      // change(customerProductMoneyEntered, productSelectedNumber, productCost)
-
-      if (customerProductMoneyEntered >= productCost){
-        console.log('customerProductMoneyEntered >= productCost', customerProductMoneyEntered, productCost)
-        console.log('Calling change')
-        change(customerProductMoneyEntered, productSelectedNumber, productCost)
-        customerProductMoneyEntered = 0
-      } else{
-        console.log('customerProductMoneyEntered not > productCost', customerProductMoneyEntered, productCost)
+        if (avoidEnteringInCreateClickFunction === 1){
+    
+          for (i = 0; i < buttonsMoney.length; i++){
+            buttonsMoney[i].addEventListener('click', functionButtonsMoney);
+        
+          }
+        }
+        
+        avoidEnteringInCreateClickFunction = avoidEnteringInCreateClickFunction + 1
+        
+        function functionButtonsMoney() {
+          let buttonValue = Number(this.value);
+          customerProductMoneyEntered = Number(customerProductMoneyEntered) + buttonValue;
+          console.log()
+          
+          screenDataAfterSelect(customerProductMoneyEntered, productSelected, productCost)
+      
+          // change(customerProductMoneyEntered, , productCost)
+    
+          if (customerProductMoneyEntered >= productCost){
+        
+        
+            change(customerProductMoneyEntered, productCost)
+            customerProductMoneyEntered = 0
+          } else{
+        
+          }
+        };
       }
-    };
+
     
 
   }
@@ -177,7 +185,7 @@ function screenDataSelectedProduct(productSelectedNumber){
 // la función anterior esta en un bucle llamando a screenDataAfterSelect.
 
 // Hay que dejar el bucle para que la pantalla se vaya actualizando, pero que la función de la pantalla no sea la que llama a la función de change.
-function screenDataAfterSelect(moneyEntered, productSelectedNumber, selectedProduct, priceProduct){
+function screenDataAfterSelect(moneyEntered,selectedProduct, priceProduct){
 
   const returnMoney = (priceProduct - moneyEntered).toFixed(2)
   document.getElementById('screen-input').value =document.getElementById('screen-input').value =`You have selected;\n Product: ${selectedProduct}\nCost: ${priceProduct}$
@@ -189,11 +197,8 @@ function screenDataAfterSelect(moneyEntered, productSelectedNumber, selectedProd
 }
 
 
-function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
-  console.log('productSelectedNumber: ' + productSelectedNumber)
-  console.log('Change', moneyEnteredChange, 'price', priceProductChange)
-  console.log('Calling post')
-  postProducts(productSelectedNumber)
+function change(moneyEnteredChange, priceProductChange){
+  postProducts()
   let change = (moneyEnteredChange - priceProductChange).toFixed(2);
   document.getElementById('screen-input').value =document.getElementById('screen-input').value =`Thank you for the purchase.\n
   
@@ -201,7 +206,6 @@ function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
   document.getElementById('buttons-number').hidden = false
   document.getElementById('buttons-money').hidden = true
   change = 0
-  console.log('Calling fetch')
   setTimeout(() =>{
     htmlJSONCall()
   },500)
@@ -209,9 +213,9 @@ function change(moneyEnteredChange, productSelectedNumber, priceProductChange){
   
 }
 
-async function postProducts(productSelectedNumber) {
-  console.log('Post')
-  const res = await fetch(baseUrl,
+async function postProducts() {
+  console.log('This is the product selected numner ',productSelectedNumber)
+  const req = await fetch(baseUrl,
     {
       method: 'POST',
       headers: {

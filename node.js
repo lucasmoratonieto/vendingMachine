@@ -31,12 +31,9 @@ app.get('/products', (req, res) => {
 
 app.post('/', (req, res) =>{
   
-  // const { buttonPressed } = req.buttonPressed
-  const { product } = req.body
-  // console.log(buttonPressed)
-  // console.log(product)
+  console.log('This is the req.body', req.body)
+  let { product } = req.body
   if(!product){
-
     return res.status(400).send({status:'failed'})
   }
   res.status(200).send({status:'received', product})
