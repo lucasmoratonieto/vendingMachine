@@ -27,11 +27,28 @@ const productsjson = path.join(dirname, './public/machineProducts.json')
 app.use(express.static('public'))
 app.use(express.json())
 
-app.get('/products', (req, res) => {
-   res.sendFile(productsjson)
+// app.get('/products', (req, res) => {
+  //    res.sendFile(productsjson)
+  
+  
+  // })
 
-})
-
+  //Getting info from de data base
+  app.get('/products', async (req, res) => {
+    
+    try{
+       const result = await db.execute("SELECT * FROM products")
+       res.json(result.rows)
+       console.log(result.rows)
+    
+      // console.log(result.rows)
+    } catch (e){
+      console.log(e)
+    }
+   
+  
+  })
+  
 app.post('/', (req, res) =>{
   
   console.log('This is the req.body', req.body)
@@ -87,12 +104,6 @@ app.listen(port, ()=>{
 
 //-------------------------------TEST DB----------------------------
 
-try{
-  const result = await db.execute("SELECT * FROM products")
 
-  // console.log(result.rows)
-} catch (e){
-  console.log(e)
-}
 
 

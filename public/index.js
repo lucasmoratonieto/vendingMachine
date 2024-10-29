@@ -96,7 +96,7 @@ enterButton.addEventListener('click', function(){
       }
     },1000)
   }else {
-    productSelectedNumber = Number(customerProductNumber);
+    productSelectedNumber = Number(customerProductNumber) - 1;
     customerProductNumber = "";
 
     document.getElementById('buttons-number').hidden = true
@@ -125,8 +125,9 @@ function screenDataSelectedProduct(productSelectedNumber){
     data = await res.json()
     console.log(data)
 
-     productSelected = data[productSelectedNumber].product;
-     productCost = data[productSelectedNumber].price;
+     productNumber = data[productSelectedNumber].productNumber;
+     productSelected = data[productSelectedNumber].productName;
+     productCost = data[productSelectedNumber].productPrice;
 
       if(data[productSelectedNumber].cuantity < 1){
         document.getElementById('screen-input').value = `We have run out of ${productSelected}. Please, select an other one.`
