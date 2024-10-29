@@ -3,23 +3,25 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'node:fs'
 import { createClient } from "@libsql/client";
-import { create } from 'domain';
 
 
 
 
 const app = express()
-const port = process.env.PORT ?? 2500
 
-// db = createClient({
-//   url: "",
-//   authToken: process.env.DB_TOKEN
-// })
+const db = createClient({
+  url: "libsql://vendingmachine-lucasmoratonieto.turso.io",
+  authToken: "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzAyMTEyNzcsImlkIjoiMGI3MDhkOWMtYTQ4Ny00NDNjLTlhNjYtOWRlMWZiNmU0OWQxIn0.Zdmej216hW_RXuv8iYENmplLon1RtgIoBUMrcpK-ibjgiZWl3zG7TQVBQYbhlaXwljaF3sDnHgUrnY8CWVTOAQ"
+})
+
+const port = process.env.PORT ?? 2400
+
+
 
 const products = fileURLToPath(import.meta.url)
 const dirname =  path.dirname(products)
 
-const productsjson = path.join(dirname, './public/machineProducts.json') 
+const productsjson = path.join(dirname, './public/machineProducts.json')
 
 
 app.use(express.static('public'))
@@ -27,6 +29,7 @@ app.use(express.json())
 
 app.get('/products', (req, res) => {
    res.sendFile(productsjson)
+
 })
 
 app.post('/', (req, res) =>{
@@ -76,3 +79,20 @@ app.post('/', (req, res) =>{
 app.listen(port, ()=>{
   console.log(`Listening on port: http://localhost:${port}`)
 })
+
+
+
+
+
+
+//-------------------------------TEST DB----------------------------
+
+try{
+  const result = await db.execute("SELECT * FROM products")
+
+  // console.log(result.rows)
+} catch (e){
+  console.log(e)
+}
+
+

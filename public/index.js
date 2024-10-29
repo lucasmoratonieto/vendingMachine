@@ -54,7 +54,7 @@ let productSelectedNumber = '';
 let customerProductMoneyEntered ='';
 
 // La url que habría que cambiar cuando se genera la base de datos
-const baseUrl = 'http://localhost:2500/'
+const baseUrl = 'http://localhost:2400/'
 
 // Function so each button appear in the screen. Also call for the function to change the screen.
 for (i = 0; i < buttonsNumber.length; i++){
@@ -123,6 +123,7 @@ function screenDataSelectedProduct(productSelectedNumber){
     )
 
     data = await res.json()
+    console.log(data)
 
      productSelected = data[productSelectedNumber].product;
      productCost = data[productSelectedNumber].price;
