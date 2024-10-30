@@ -1,4 +1,4 @@
-# Vending Machine Application 
+# Vending Machine Application 🍫
 
 This project is a Vending Machine Application built with Node.js, JavaScript, HTML, and CSS. The application enables users to browse available products, select an item to purchase, and make a payment, while the system dynamically updates product quantities in real-time by interacting with a SQL database.
 
