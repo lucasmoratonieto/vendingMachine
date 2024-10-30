@@ -2,14 +2,14 @@
 
 This project is a Vending Machine Application built with Node.js, JavaScript, HTML, and CSS. The application enables users to browse available products, select an item to purchase, and make a payment, while the system dynamically updates product quantities in real-time by interacting with a SQL database.
 
-Features
+##Features
 Product Selection: Users can view a list of available products, each displaying essential information like product name, price, and remaining stock.
 
 Payment Processing: Once a product is selected, users can proceed with payment. The application handles basic payment flow, allowing users to complete their purchase seamlessly.
 
 Inventory Management: After each successful transaction, the application updates the SQL database to reflect the new product quantity, ensuring that the displayed stock is always accurate.
 
-Technical Stack
+##Technical Stack
 Backend: Built with Node.js to handle requests and manage database interactions. The server uses SQL queries to retrieve, update, and manage product data.
 
 Frontend: Developed using HTML, CSS, and JavaScript to create a user-friendly interface. JavaScript enables the interactive aspects, including selecting products and handling client-server communication.
