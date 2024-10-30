@@ -1,7 +1,6 @@
 import express from 'express'
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fs from 'node:fs'
 import { createClient } from "@libsql/client";
 
 
@@ -11,7 +10,7 @@ const app = express()
 
 const db = createClient({
   url: "libsql://vendingmachine-lucasmoratonieto.turso.io",
-  authToken: "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzAyMTEyNzcsImlkIjoiMGI3MDhkOWMtYTQ4Ny00NDNjLTlhNjYtOWRlMWZiNmU0OWQxIn0.Zdmej216hW_RXuv8iYENmplLon1RtgIoBUMrcpK-ibjgiZWl3zG7TQVBQYbhlaXwljaF3sDnHgUrnY8CWVTOAQ"
+  authToken: process.env.DB_TOKEN
 })
 
 const port = process.env.PORT ?? 2400
@@ -21,17 +20,13 @@ const port = process.env.PORT ?? 2400
 const products = fileURLToPath(import.meta.url)
 const dirname =  path.dirname(products)
 
-const productsjson = path.join(dirname, './public/machineProducts.json')
+
 
 
 app.use(express.static('public'))
 app.use(express.json())
 
-// app.get('/products', (req, res) => {
-  //    res.sendFile(productsjson)
-  
-  
-  // })
+
 
   //Getting info from de data base
   app.get('/products', async (req, res) => {
@@ -39,7 +34,7 @@ app.use(express.json())
     try{
        const result = await db.execute("SELECT * FROM products")
        res.json(result.rows)
-       console.log(result.rows)
+      //  console.log(result.rows)
     
       // console.log(result.rows)
     } catch (e){
@@ -49,48 +44,25 @@ app.use(express.json())
   
   })
   
-app.post('/', (req, res) =>{
+app.post('/', async (req, res) =>{
   
-  console.log('This is the req.body', req.body)
-  let { product } = req.body
+  console.log('This is the req.body.product', req.body.product)
+  let product = req.body.product
+  let cuantity = product.productCuantity
+  let number = product.productNumber
+  console.log(product.productNumber,product.productName,product.productPrice, product.productCuantity)
+  // console.log(typeof(req.body.product.productName))
   if(!product){
     return res.status(400).send({status:'failed'})
   }
   res.status(200).send({status:'received', product})
-  
-  fs.readFile(productsjson, 'utf-8', (err, data) =>{
-      if (err) {
-        console.log(err)
-        return
-      } else {
-         const jsonData = JSON.parse(data)
-         
-         
-         
-         for (let i = 1; i <= Object.keys(jsonData).length; i++){
-          if (jsonData[i].product == product.product){
-            console.log("son iguales")
-            console.log(jsonData[i])
-            console.log(product)
 
-            jsonData[i].cuantity = jsonData[i].cuantity - 1
-            console.log(jsonData)
-            fs.writeFile(productsjson, JSON.stringify(jsonData), err =>{
-              if (err) {
-                console.log(err)
-              } else {
-                console.log("all ok")
-              }
-            })
-            return
-          } else {
-            console.log("no")
-            console.log(jsonData[i])
-            console.log(product)
-          }
-         }
-      }
-    })
+  const postResult = await db.execute(
+    // "INSERT INTO products(productNumber, productName, productPrice, productCuantity) values (1, 'Coke', 2.5, 47)"
+    "UPDATE products SET productCuantity =  ? WHERE productNumber = ?",
+    [cuantity, number]
+
+  )
 })
 
 app.listen(port, ()=>{
