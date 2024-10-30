@@ -8,7 +8,7 @@ dotenv.config()
 const app = express()
 
 const db = createClient({
-  url: "libsql://vendingmachine-lucasmoratonieto.turso.io",
+  url: process.env.DB_URL,
   authToken: process.env.DB_TOKEN
 })
 
