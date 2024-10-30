@@ -1,9 +1,8 @@
 import express from 'express'
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { createClient } from "@libsql/client";
 
-
+import dotenv from 'dotenv';
+dotenv.config()
 
 
 const app = express()
@@ -14,14 +13,6 @@ const db = createClient({
 })
 
 const port = process.env.PORT ?? 2400
-
-
-
-const products = fileURLToPath(import.meta.url)
-const dirname =  path.dirname(products)
-
-
-
 
 app.use(express.static('public'))
 app.use(express.json())
