@@ -7,7 +7,7 @@ This project is a Vending Machine Application built with Node.js, JavaScript, HT
 
 - Payment Processing: Once a product is selected, users can proceed with payment. The application handles basic payment flow, allowing users to complete their purchase seamlessly.
 
-- Inventory Management: After each successful transaction, the application updates the SQL database to reflect the new product quantity, ensuring that the displayed stock is always accurate.
+- Inventory Management: After each successful transaction, the application updates the SQL database to reflect the new product quantity, ensuring that the displayed stock is always accurate. And preventing customer to buy items that have run out of stock.
 
 ## Technical Stack
 - Backend: Built with Node.js to handle requests and manage database interactions. The server uses SQL queries to retrieve, update, and manage product data.
